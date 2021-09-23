@@ -1,42 +1,42 @@
-import React, { createContext, useReducer, useContext } from "react";
+import React, { createContext, useReducer } from "react";
 
 //creating Context at first.
 
-const globalStateContext = createContext();
-const globalDispatchContext = createContext();
+export const globalStateContext = createContext();
 
 const TOGGLE_THEME = "TOGGLE_THEME";
 
 //creating reducer instead of a normal useState
-const reducer = (state, action) => {
+const Globalreducer = (state, action) => {
   switch (action.type) {
     case TOGGLE_THEME:
       return {
         ...state,
         currentTheme: action.theme
       };
+    case "TOGGLE_CURSOR":
+      return {
+        ...state,
+        cursorType: action.cursorType
+      };
     default:
       throw new Error(`action type is not defined: ${action.type}`);
   }
 };
 
+const initialState = {
+  currentTheme: "dark"
+};
+
 //let's create a provider
-const GlobalProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(
-    reducer,
-    /*initial state*/ {
-      currentTheme: "dark"
-    }
-  );
+export const GlobalProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(Globalreducer, initialState);
 
   return (
-    <globalDispatchContext.Provider value={dispatch}>
-      <globalStateContext.Provider value={state}>
-        {children}
-      </globalStateContext.Provider>
-    </globalDispatchContext.Provider>
+    <globalStateContext.Provider value={{ state, dispatch }}>
+      {children}
+    </globalStateContext.Provider>
   );
 };
 
-export const useGlobalStateContext = () => useContext(globalStateContext);
-export const useGlobalDispatchContext = () => useContext(globalDispatchContext);
+//screw me fuck me already what rhe fuck

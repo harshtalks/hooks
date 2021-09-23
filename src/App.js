@@ -1,9 +1,7 @@
 import { GlobalStyles } from "./styles/GlobalStyles";
+import { useContext } from "react";
 import Header from "./Header";
-import {
-  useGlobalStateContext,
-  useGlobalDispatchContext
-} from "./GlobalContext";
+import { globalStateContext, GlobalProvider } from "./GlobalContext";
 export default function App() {
   //main stuff here
   //themes
@@ -21,8 +19,8 @@ export default function App() {
   };
 
   //using context to get the refernce for theme changing
-  const currentTheme = useGlobalStateContext();
-  const dispatch = useGlobalDispatchContext();
+  const { dispatch } = useContext(globalStateContext);
+  const currentTheme = state.currentTheme;
 
   const toggleTheme = () => {
     if (currentTheme === "dark") {
@@ -38,11 +36,11 @@ export default function App() {
   };
 
   return (
-    <>
+    <GlobalProvider>
       <GlobalStyles theme={currentTheme === "dark" ? DarkTheme : LightTheme} />
       <Header toggleTheme={toggleTheme} />
-      <h1>Hello Bestie</h1>
+      <h1 onClick={() => console.log(currentTheme)}>Hello Bestie</h1>
       <h2>I'm using useContext with useReducer. Gave me Hard time but fun</h2>
-    </>
+    </GlobalProvider>
   );
 }
