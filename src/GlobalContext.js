@@ -1,8 +1,11 @@
 import React, { createContext, useReducer } from "react";
 
 //creating Context at first.
+const initialState = {
+  currentTheme: "dark"
+};
 
-export const globalStateContext = createContext();
+export const globalContext = createContext();
 
 const TOGGLE_THEME = "TOGGLE_THEME";
 
@@ -14,18 +17,9 @@ const Globalreducer = (state, action) => {
         ...state,
         currentTheme: action.theme
       };
-    case "TOGGLE_CURSOR":
-      return {
-        ...state,
-        cursorType: action.cursorType
-      };
     default:
       throw new Error(`action type is not defined: ${action.type}`);
   }
-};
-
-const initialState = {
-  currentTheme: "dark"
 };
 
 //let's create a provider
@@ -33,9 +27,9 @@ export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(Globalreducer, initialState);
 
   return (
-    <globalStateContext.Provider value={{ state, dispatch }}>
+    <globalContext.Provider value={{ state, dispatch }}>
       {children}
-    </globalStateContext.Provider>
+    </globalContext.Provider>
   );
 };
 
