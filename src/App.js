@@ -1,7 +1,9 @@
 import { GlobalStyles } from "./styles/GlobalStyles";
+import { ThemeProvider } from "styled-components";
 import Header from "./Header";
 import { globalContext } from "./GlobalContext";
 import { useContext, useEffect } from "react";
+import Cursor from "./Cursor";
 export default function App() {
   //main stuff here
   //themes
@@ -34,6 +36,15 @@ export default function App() {
       });
   };
 
+  const toggleCursor = (cursorType) => {
+    cursorType =
+      (state.cursorStyles.includes(cursorType) && cursorType) || false;
+    dispatch({
+      type: "TOGGLE_CURSOR",
+      cursorType: cursorType
+    });
+  };
+
   useEffect(() => {
     window.localStorage.setItem("theme", state.currentTheme);
   }, [state.currentTheme]);
@@ -41,9 +52,12 @@ export default function App() {
 
   return (
     <>
-      <GlobalStyles theme={currentTheme === "dark" ? DarkTheme : LightTheme} />
-      <Header toggleTheme={toggleTheme} />
-      <h1>HI BESTIES</h1>
+      <ThemeProvider theme={currentTheme === "dark" ? DarkTheme : LightTheme}>
+        <Cursor />
+        <GlobalStyles />
+        <Header toggleTheme={toggleTheme} toggleCursor={toggleCursor} />
+        <h1>HI BESTIES</h1>
+      </ThemeProvider>
     </>
   );
 }

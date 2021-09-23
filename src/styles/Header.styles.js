@@ -6,7 +6,7 @@ export const HeaderContent = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 1rem 2rem;
-
+  background: lavender;
   button {
     outline: none;
     border: none;
@@ -36,6 +36,5 @@ export const Logo = styled.div`
     background: red;
     border-radius: 50%;
     margin: 0 8px;
-    cursor: pointer;
   }
 `;

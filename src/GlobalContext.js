@@ -5,13 +5,15 @@ const initialState = {
   currentTheme:
     window.localStorage.getItem("theme") === null
       ? "dark"
-      : window.localStorage.getItem("theme")
+      : window.localStorage.getItem("theme"),
+  cursorType: false,
+  cursorStyles: ["pointer", "hovered"]
 };
 
 export const globalContext = createContext();
 
 const TOGGLE_THEME = "TOGGLE_THEME";
-const TOGGLE_CURSOR = "TOGGLEW_CURSOR";
+const TOGGLE_CURSOR = "TOGGLE_CURSOR";
 
 //creating reducer instead of a normal useState
 const Globalreducer = (state, action) => {
