@@ -2,12 +2,16 @@ import React, { createContext, useReducer } from "react";
 
 //creating Context at first.
 const initialState = {
-  currentTheme: "dark"
+  currentTheme:
+    window.localStorage.getItem("theme") === null
+      ? "dark"
+      : window.localStorage.getItem("theme")
 };
 
 export const globalContext = createContext();
 
 const TOGGLE_THEME = "TOGGLE_THEME";
+const TOGGLE_CURSOR = "TOGGLEW_CURSOR";
 
 //creating reducer instead of a normal useState
 const Globalreducer = (state, action) => {
@@ -16,6 +20,11 @@ const Globalreducer = (state, action) => {
       return {
         ...state,
         currentTheme: action.theme
+      };
+    case TOGGLE_CURSOR:
+      return {
+        ...state,
+        cursorType: action.cursorType
       };
     default:
       throw new Error(`action type is not defined: ${action.type}`);

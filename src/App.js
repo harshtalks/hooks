@@ -1,7 +1,7 @@
 import { GlobalStyles } from "./styles/GlobalStyles";
 import Header from "./Header";
 import { globalContext } from "./GlobalContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 export default function App() {
   //main stuff here
   //themes
@@ -32,8 +32,11 @@ export default function App() {
         type: "TOGGLE_THEME",
         theme: "dark"
       });
-    console.log(state.currentTheme);
   };
+
+  useEffect(() => {
+    window.localStorage.setItem("theme", state.currentTheme);
+  }, [state.currentTheme]);
   //using context to get the refernce for theme changing
 
   return (
